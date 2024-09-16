@@ -1,20 +1,22 @@
-class Character {
-  #inventory = [];
-  #health = 10;
+import { MainView } from './views/main/main';
 
-  pockItem(item) {
-    this.#inventory.push(item);
+class App {
+  routes = [{ path: '', view: MainView }];
+
+  constructor() {
+    window.addEventListener('hashchange', this.route.bind(this));
+    this.route();
   }
 
-  recieveDamage(damage) {
-    this.#health -= damage;
-  }
+  route() {
+    if (this.currentView) {
+      this.currentView.destroy();
+    }
 
-  localStorage() {
-    localStorage.setItem('char', this);
-  }
-
-  loadCharacter() {
-    //.....
+    const view = this.routes.find((route) => route.path === location.hash).view;
+    this.currentView = new view();
+    this.currentView.render();
   }
 }
+
+new App();
