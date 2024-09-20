@@ -1,16 +1,30 @@
 import { AbstractView } from '../../common/view';
+import onChange from 'on-change';
 
 export class MainView extends AbstractView {
-  constructor() {
+  state = {
+    list: [],
+    loading: false,
+    offset: 0,
+    searchQuery: '',
+  };
+
+  constructor(appState) {
     super();
+    this.main = document.createElement('main');
     this.setPageTitle('Поиск книг');
+    this.appState = appState;
+    this.appState = onChange(this.appState, this.appStateHook.bind(this));
+  }
+
+  appStateHook(path) {
+    if (path === 'favorites') {
+      console.log(path);
+    }
   }
 
   render() {
-    const main = document.createElement('div');
-    main.innerText = 'Тест';
-    console.log(main);
-    this.app.innerText = '';
-    this.app.append(main);
+    this.main.textContent = '';
+    this.app.append(this.main);
   }
 }
