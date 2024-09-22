@@ -1,0 +1,30 @@
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.menu {
+  display: flex;
+  gap: 30px;
+  align-items: center;
+}
+
+.menu__item {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--black);
+}
+
+.menu__counter {
+  border: 1px solid var(--black);
+  border-radius: 50%;
+  padding: 0px 12px;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 32px;
+}

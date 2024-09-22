@@ -1,5 +1,6 @@
 import { AbstractView } from '../../common/view';
 import onChange from 'on-change';
+import { Header } from '../../components/header/header';
 
 export class MainView extends AbstractView {
   state = {
@@ -24,6 +25,7 @@ export class MainView extends AbstractView {
   }
 
   render() {
+    console.log(this.appState.favorites.length);
     this.main.textContent = '';
     this.app.append(this.main);
   }

@@ -1,9 +1,6 @@
-import { Header } from '../components/header/header';
-
 export class AbstractView {
   constructor() {
     this.app = document.getElementById('root');
-    this.renderHeader();
   }
 
   setPageTitle(title) {
@@ -16,10 +13,5 @@ export class AbstractView {
 
   destroy() {
     return;
-  }
-
-  renderHeader() {
-    const header = new Header().render();
-    this.app.prepend(header);
   }
 }
