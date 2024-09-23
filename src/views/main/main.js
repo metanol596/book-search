@@ -1,6 +1,6 @@
-import { AbstractView } from '../../common/view';
 import onChange from 'on-change';
-import { Header } from '../../components/header/header';
+import { Search } from '../../components/search/search';
+import { AbstractView } from '../../common/view';
 
 export class MainView extends AbstractView {
   state = {
@@ -25,8 +25,8 @@ export class MainView extends AbstractView {
   }
 
   render() {
-    console.log(this.appState.favorites.length);
     this.main.textContent = '';
+    this.main.append(new Search(this.state).render());
     this.app.append(this.main);
   }
 }
