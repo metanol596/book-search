@@ -1,6 +1,7 @@
 import onChange from 'on-change';
 import { Search } from '../../components/search/search';
 import { AbstractView } from '../../common/view';
+import { CardList } from '../../components/card-list/card-list';
 
 export class MainView extends AbstractView {
   state = {
@@ -8,7 +9,6 @@ export class MainView extends AbstractView {
     loading: false,
     offset: 0,
     searchQuery: '',
-    booksFound: 0,
   };
 
   constructor(appState) {
@@ -28,13 +28,14 @@ export class MainView extends AbstractView {
 
   async stateHook(path) {
     if (path === 'searchQuery') {
+      this.state.loading = true;
       const data = await this.loadBooks(this.state.searchQuery, this.state.offset);
+      this.state.loading = false;
       this.state.list = data.docs;
-      this.state.booksFound = data.num_found;
+    }
 
-      if (path === 'list') {
-        this.render();
-      }
+    if (path === 'list' || path === 'loading') {
+      this.render();
     }
   }
 
@@ -44,12 +45,9 @@ export class MainView extends AbstractView {
   }
 
   render() {
-    const bookCountTextElemnt = document.createElement('div');
-    bookCountTextElemnt.textContent = `Найдено книг - ${this.state.booksFound}`;
-
     this.main.textContent = '';
     this.main.append(new Search(this.state).render());
-    this.main.append(bookCountTextElemnt);
+    this.main.append(new CardList(this.state).render());
     this.app.append(this.main);
   }
 }
