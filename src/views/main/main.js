@@ -6,8 +6,9 @@ import { CardList } from '../../components/card-list/card-list';
 export class MainView extends AbstractView {
   state = {
     list: [],
+    booksNumFound: 0,
     loading: false,
-    offset: 0,
+    offset: 10,
     searchQuery: '',
   };
 
@@ -31,23 +32,25 @@ export class MainView extends AbstractView {
       this.state.loading = true;
       const data = await this.loadBooks(this.state.searchQuery, this.state.offset);
       this.state.loading = false;
+      this.state.booksNumFound = data.numFound;
       this.state.list = data.docs;
     }
 
     if (path === 'list' || path === 'loading') {
+      console.log(this.state.booksNumFound);
       this.render();
     }
   }
 
   async loadBooks(q, offset) {
-    const res = await fetch(`https://openlibrary.org/search.json?q=${q}&offset=${offset}`);
+    const res = await fetch(`https://openlibrary.org/search.json?q=${q}&limit=50&offset=${offset}`);
     return res.json();
   }
 
   render() {
-    this.main.textContent = '';
+    this.main.innerHTML = '';
     this.main.append(new Search(this.state).render());
-    this.main.append(new CardList(this.state).render());
+    this.main.append(new CardList(this.state, this.appState).render());
     this.app.append(this.main);
   }
 }

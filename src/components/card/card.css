@@ -1,0 +1,52 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  width: 180px;
+  padding-bottom: 10px;
+  background-color: var(--black);
+}
+
+.card__image-wrapper {
+  height: 100%;
+}
+
+.card__image-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+}
+
+.card__info {
+  padding: 12px 10px;
+  margin-bottom: 38px;
+}
+
+.card__subject {
+  font-size: 11px;
+  font-weight: 300;
+  color: var(--grey);
+}
+
+.card__title {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--white);
+}
+
+.card__author {
+  font-size: 11px;
+  color: var(--white);
+}
+
+.card__footer {
+  padding-left: 10px;
+}
+
+.card__footer button {
+  padding: 6px 8px;
+  border: 1px solid white;
+  border-radius: 6px;
+  cursor: pointer;
+  background-color: transparent;
+}
