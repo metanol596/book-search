@@ -2,14 +2,15 @@ import { DivComponent } from '../../common/div-component';
 import './card.css';
 
 export class Card extends DivComponent {
-  constructor(appState, cardState) {
+  constructor(appState, cardState, appInstance) {
     super();
     this.appState = appState;
     this.cardState = cardState;
+    this.appInstance = appInstance;
   }
 
   render() {
-    let isExist = this.appState.favorites.find((fav) => fav.key === this.cardState.key);
+    let isFavorite = this.appState.favorites.find((fav) => fav.key === this.cardState.key);
 
     this.div.classList.add('card');
     this.div.innerHTML = `
@@ -30,11 +31,25 @@ export class Card extends DivComponent {
         
       </div>
       <div class="card__footer">
-          <button>
-            <img src="/static/icons/favorites${!isExist ? '-white' : ''}.svg"/>
-          </button>
-        </div>
+        <button class="card__toFavoritesBtn ${isFavorite ? 'card__isFavorite' : ''}">
+          <img src="/static/icons/favorites${!isFavorite ? '-white' : ''}.svg"/>
+        </button>
+      </div>
     `;
+
+    this.div.querySelector('.card__footer button').addEventListener('click', () => {
+      if (!isFavorite) {
+        this.appState.favorites.push(this.cardState);
+      } else {
+        const index = this.appState.favorites.findIndex((fav) => fav.key === this.cardState.key);
+        if (index !== -1) {
+          this.appState.favorites.splice(index, 1);
+        }
+      }
+
+      this.appInstance.renderHeader();
+    });
+
     return this.div;
   }
 }

@@ -43,10 +43,14 @@
   padding-left: 10px;
 }
 
-.card__footer button {
+.card__toFavoritesBtn {
   padding: 6px 8px;
   border: 1px solid white;
   border-radius: 6px;
   cursor: pointer;
   background-color: transparent;
+}
+
+.card__isFavorite {
+  background-color: var(--white);
 }

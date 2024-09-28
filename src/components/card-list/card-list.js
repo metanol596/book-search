@@ -3,14 +3,14 @@ import { Card } from '../card/card';
 import './card-list.css';
 
 export class CardList extends DivComponent {
-  constructor(state, appState) {
+  constructor(state, appState, appInstance) {
     super();
     this.state = state;
     this.appState = appState;
+    this.appInstance = appInstance;
   }
 
   render() {
-    console.log(this.state);
     if (this.state.loading) {
       this.div.textContent = 'loading...';
       return this.div;
@@ -23,13 +23,11 @@ export class CardList extends DivComponent {
     `;
 
     for (const card of this.state.list) {
-      this.div.querySelector('.card-list__wrapper').append(new Card(this.appState, card).render());
+      this.div
+        .querySelector('.card-list__wrapper')
+        .append(new Card(this.appState, card, this.appInstance).render());
     }
-    //console.log(
-    //  Array.from({ length: this.state.list.length }, (k) => {
-    //    this.div.append(new Card());
-    //  }),
-    //);
+
     return this.div;
   }
 }

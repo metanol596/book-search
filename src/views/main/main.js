@@ -12,18 +12,24 @@ export class MainView extends AbstractView {
     searchQuery: '',
   };
 
-  constructor(appState) {
+  constructor(appState, appInstance) {
     super();
     this.main = document.createElement('main');
     this.setPageTitle('Поиск книг');
     this.appState = appState;
+    this.appInstance = appInstance;
     this.appState = onChange(this.appState, this.appStateHook.bind(this));
     this.state = onChange(this.state, this.stateHook.bind(this));
   }
 
+  destroy() {
+    onChange.unsubscribe(this.appState);
+    onChange.unsubscribe(this.state);
+  }
+
   appStateHook(path) {
     if (path === 'favorites') {
-      console.log(path);
+      this.render();
     }
   }
 
@@ -37,7 +43,6 @@ export class MainView extends AbstractView {
     }
 
     if (path === 'list' || path === 'loading') {
-      console.log(this.state.booksNumFound);
       this.render();
     }
   }
@@ -50,7 +55,7 @@ export class MainView extends AbstractView {
   render() {
     this.main.innerHTML = '';
     this.main.append(new Search(this.state).render());
-    this.main.append(new CardList(this.state, this.appState).render());
+    this.main.append(new CardList(this.state, this.appState, this.appInstance).render());
     this.app.append(this.main);
   }
 }
