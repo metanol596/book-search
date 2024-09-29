@@ -1,5 +1,6 @@
 import { DivComponent } from '../../common/div-component';
 import { Card } from '../card/card';
+
 import './card-list.css';
 
 export class CardList extends DivComponent {

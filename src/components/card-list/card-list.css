@@ -3,4 +3,5 @@
   flex-wrap: wrap;
   gap: 20px 25px;
   justify-content: space-between;
+  margin-bottom: 30px;
 }

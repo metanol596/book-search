@@ -4,13 +4,15 @@ import { Search } from '../../components/search/search';
 import { AbstractView } from '../../common/view';
 import { CardList } from '../../components/card-list/card-list';
 import { Header } from '../../components/header/header';
+import { Pagination } from '../../components/pagination/pagination';
 
 export class MainView extends AbstractView {
   state = {
     list: [],
     booksNumFound: 0,
     loading: false,
-    offset: 10,
+    cardsPerPage: 6,
+    offset: 0,
     searchQuery: '',
   };
 
@@ -34,7 +36,7 @@ export class MainView extends AbstractView {
   }
 
   async stateHook(path) {
-    if (path === 'searchQuery') {
+    if (path === 'searchQuery' || path === 'offset') {
       this.state.loading = true;
       const data = await this.loadBooks(this.state.searchQuery, this.state.offset);
       this.state.loading = false;
@@ -48,7 +50,9 @@ export class MainView extends AbstractView {
   }
 
   async loadBooks(q, offset) {
-    const res = await fetch(`https://openlibrary.org/search.json?q=${q}&limit=50&offset=${offset}`);
+    const res = await fetch(
+      `https://openlibrary.org/search.json?q=${q}&limit=${this.state.cardsPerPage}&offset=${offset}`,
+    );
     return res.json();
   }
 
@@ -57,6 +61,11 @@ export class MainView extends AbstractView {
     main.innerHTML = `<h1>Найдено книг - ${this.state.booksNumFound}</h1>`;
     main.append(new Search(this.state).render());
     main.append(new CardList(this.state, this.appState).render());
+
+    if (this.state.list.length > 0 && !this.state.loading) {
+      main.append(new Pagination(this.state).render());
+    }
+
     this.app.innerHTML = '';
     this.app.append(main);
     this.renderHeader();
