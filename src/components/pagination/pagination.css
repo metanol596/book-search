@@ -1,0 +1,18 @@
+.pagination {
+  display: flex;
+  justify-content: space-between;
+}
+
+.pagination__btn {
+  display: flex;
+  align-items: center;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.pagination__next-arrow {
+  transform: rotate(180deg);
+}

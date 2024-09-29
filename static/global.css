@@ -1,0 +1,24 @@
+body {
+  margin: 0;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  color: var(--black);
+}
+
+:root {
+  --black: #121212;
+  --black-plaholder: #252525;
+  --white: #ffffff;
+  --grey: #dedede;
+}
+
+#root {
+  padding: 15px 32px;
+  margin: 0 auto;
+  max-width: 1100px;
+}
+
+a {
+  text-decoration: none;
+}
