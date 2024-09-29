@@ -1,6 +1,7 @@
 import onChange from 'on-change';
 import { AbstractView } from '../../common/view';
 import { Card } from '../../components/card/card';
+import './favorites.css';
 
 export class FavoritesView extends AbstractView {
   constructor(appState, appInstance) {
