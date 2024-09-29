@@ -1,7 +1,9 @@
 import onChange from 'on-change';
+
 import { Search } from '../../components/search/search';
 import { AbstractView } from '../../common/view';
 import { CardList } from '../../components/card-list/card-list';
+import { Header } from '../../components/header/header';
 
 export class MainView extends AbstractView {
   state = {
@@ -12,14 +14,12 @@ export class MainView extends AbstractView {
     searchQuery: '',
   };
 
-  constructor(appState, appInstance) {
+  constructor(appState) {
     super();
-    this.main = document.createElement('main');
-    this.setPageTitle('Поиск книг');
     this.appState = appState;
-    this.appInstance = appInstance;
     this.appState = onChange(this.appState, this.appStateHook.bind(this));
     this.state = onChange(this.state, this.stateHook.bind(this));
+    this.setPageTitle('Поиск книг');
   }
 
   destroy() {
@@ -53,9 +53,17 @@ export class MainView extends AbstractView {
   }
 
   render() {
-    this.main.innerHTML = '';
-    this.main.append(new Search(this.state).render());
-    this.main.append(new CardList(this.state, this.appState, this.appInstance).render());
-    this.app.append(this.main);
+    const main = document.createElement('main');
+    main.innerHTML = `<h1>Найдено книг - ${this.state.booksNumFound}</h1>`;
+    main.append(new Search(this.state).render());
+    main.append(new CardList(this.state, this.appState).render());
+    this.app.innerHTML = '';
+    this.app.append(main);
+    this.renderHeader();
+  }
+
+  renderHeader() {
+    const header = new Header(this.appState).render();
+    this.app.prepend(header);
   }
 }

@@ -1,14 +1,15 @@
 import onChange from 'on-change';
+
 import { AbstractView } from '../../common/view';
 import { Card } from '../../components/card/card';
+import { Header } from '../../components/header/header';
+
 import './favorites.css';
 
 export class FavoritesView extends AbstractView {
-  constructor(appState, appInstance) {
+  constructor(appState) {
     super();
     this.appState = appState;
-    this.appInstance = appInstance;
-    this.main = document.createElement('main');
     this.setPageTitle('Избранное');
     this.appState = onChange(this.appState, this.appStateHook.bind(this));
   }
@@ -24,12 +25,11 @@ export class FavoritesView extends AbstractView {
   }
 
   render() {
-    document.querySelector('main').remove();
-    this.main.innerHTML = '';
-    this.main.innerHTML = '<h1>Favorites</h1>';
+    const main = document.createElement('main');
+    main.innerHTML = '<h1>Favorites</h1>';
 
     if (this.appState.favorites.length === 0) {
-      this.main.innerHTML = '<p>Нет избранных книг</p>';
+      main.innerHTML = '<p>Нет избранных книг</p>';
     }
 
     if (this.appState.favorites.length > 0) {
@@ -37,10 +37,18 @@ export class FavoritesView extends AbstractView {
       favList.classList.add('fav-list');
 
       this.appState.favorites.map((item) => {
-        favList.append(new Card(this.appState, item, this.appInstance).render());
-        this.main.append(favList);
+        favList.append(new Card(this.appState, item).render());
+        main.append(favList);
       });
     }
-    this.app.append(this.main);
+
+    this.app.innerHTML = '';
+    this.app.append(main);
+    this.renderHeader();
+  }
+
+  renderHeader() {
+    const header = new Header(this.appState).render();
+    this.app.prepend(header);
   }
 }

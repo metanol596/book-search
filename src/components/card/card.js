@@ -2,11 +2,10 @@ import { DivComponent } from '../../common/div-component';
 import './card.css';
 
 export class Card extends DivComponent {
-  constructor(appState, cardState, appInstance) {
+  constructor(appState, cardState) {
     super();
     this.appState = appState;
     this.cardState = cardState;
-    this.appInstance = appInstance;
   }
 
   render() {
@@ -46,8 +45,6 @@ export class Card extends DivComponent {
           this.appState.favorites.splice(index, 1);
         }
       }
-
-      this.appInstance.renderHeader();
     });
 
     return this.div;
